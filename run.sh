@@ -16,7 +16,7 @@ auto_ssh_copy_id() {
 	expect -c "set timeout -1;
     	spawn ssh-copy-id ${REMOTE_SSH_SERVER};
 	expect {
-	    *(yes/no)*  {send -- yes\r;exp_continue;}
+	    *yes/no*  {send -- yes\r;exp_continue;}
 	    *password:* {send -- ${REMOTE_SSH_PASSWD}\r;exp_continue;}
 	    eof         {exit 0;}
 	}";
