@@ -34,7 +34,7 @@ else
   # SSH connect mode
   #
   # Preload key
-  ${REMOTE_SSH_SERVER}=$(ip a | grep inet | grep -v inet6 | grep -v 127 | sed 's/^[ \t]*//g' | cut -d ' ' -f2 | cut -d '/' -f1);
+  REMOTE_SSH_SERVER=$(ip a | grep inet | grep -v inet6 | grep -v 127 | sed 's/^[ \t]*//g' | cut -d ' ' -f2 | cut -d '/' -f1);
   auto_gen_ssh_key;
   auto_ssh_copy_id;
   
