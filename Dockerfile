@@ -17,7 +17,7 @@ COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/package.json /app/package.json
 COPY --from=builder /app/index.js /app/index.js
-RUN apk add -U openssh-client sshpass
+RUN apk add -U openssh-client sshpass expect
 #
 ADD run.sh /app
 
