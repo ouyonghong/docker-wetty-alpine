@@ -38,7 +38,6 @@ else
   auto_gen_ssh_key;
   auto_ssh_copy_id;
   
-  mkdir ~/.ssh && \
   ssh-keyscan -H -p ${REMOTE_SSH_PORT} ${REMOTE_SSH_SERVER} > ~/.ssh/known_hosts
 
   cmd="npm start -- -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE}" 
@@ -54,5 +53,5 @@ else
   if ! [ "x${SSH_KEY}" == "x" ]; then
     cmd="${cmd} --sshkey ${SSH_KEY}"
   fi
-  su -c "${cmd}" node
+  ${cmd}
 fi
