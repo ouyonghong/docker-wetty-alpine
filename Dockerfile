@@ -9,7 +9,6 @@ RUN git clone https://github.com/butlerx/wetty /app && \
     yarn install --production --ignore-scripts --prefer-offline
 
 FROM node:carbon-alpine
-LABEL maintainer="Sven Fischer <sven@leiderfischer.de>"
 WORKDIR /app
 ENV NODE_ENV=production
 EXPOSE 3000
@@ -19,12 +18,17 @@ COPY --from=builder /app/package.json /app/package.json
 COPY --from=builder /app/index.js /app/index.js
 RUN apk add -U openssh-client sshpass expect
 #
+VOLUME [ "/remote_ssh" ]
 ADD run.sh /app
 
 # Default ENV params used by wetty
 ENV REMOTE_SSH_SERVER=127.0.0.1 \
     REMOTE_SSH_PORT=22 \
-    WETTY_PORT=3000
+    WETTY_PORT=3000 \
+    SSH_AUTH="publickey" \
+    SSH_KEY="/root/.ssh/id_rsa" \
+    KNOWNHOSTS="/root/.ssh/known_hosts" \
+    REMOTE_PUB_KEY_DIR="/remote_ssh"
 
 EXPOSE 3000
 

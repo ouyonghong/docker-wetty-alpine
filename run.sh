@@ -7,20 +7,10 @@ auto_gen_ssh_key() {
 		*passphrase)* {send -- \r;exp_continue;}
 		*again*	{send -- \r;exp_continue;}
 		*(y/n)* {send -- y\r;exp_continue;}
-		*password:* {send -- ${REMOTE_SSH_PASSWD}\r;exp_continue;}
 		eof         {exit 0;}
 	}";
 }
 
-auto_ssh_copy_id() {
-	expect -c "set timeout -1;
-    	spawn ssh-copy-id ${REMOTE_SSH_SERVER};
-	expect {
-	    *yes/no*  {send -- yes\r;exp_continue;}
-	    *password:* {send -- ${REMOTE_SSH_PASSWD}\r;exp_continue;}
-	    eof         {exit 0;}
-	}";
-}
 
 if [ "x${BASE}" == "x" ]; then
   BASE="/"
@@ -36,7 +26,7 @@ else
   # Preload key
   REMOTE_SSH_SERVER=$(ip a | grep inet | grep -v inet6 | grep -v 127 | sed 's/^[ \t]*//g' | cut -d ' ' -f2 | cut -d '/' -f1);
   auto_gen_ssh_key;
-  auto_ssh_copy_id;
+  cp /root/.ssh/id_rsa.pub /${REMOTE_PUB_KEY_DIR}/authorized_keys
   
   ssh-keyscan -H -T 30 -p ${REMOTE_SSH_PORT} ${REMOTE_SSH_SERVER} > ~/.ssh/known_hosts
 
