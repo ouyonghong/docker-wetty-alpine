@@ -38,7 +38,7 @@ else
   auto_gen_ssh_key;
   auto_ssh_copy_id;
   
-  ssh-keyscan -H -p ${REMOTE_SSH_PORT} ${REMOTE_SSH_SERVER} > ~/.ssh/known_hosts
+  ssh-keyscan -H -T 30 -p ${REMOTE_SSH_PORT} ${REMOTE_SSH_SERVER} > ~/.ssh/known_hosts
 
   cmd="npm start -- -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE}" 
   if ! [ "x${REMOTE_SSH_USER}" == "x" ]; then
