@@ -19,7 +19,8 @@ fi
 
 if [ "x${REMOTE_SSH_SERVER}" == "x" ]; then
   # Login mode, no SSH_SERVER
-  npm start -- -p ${WETTY_PORT}
+  # npm start -- -p ${WETTY_PORT}
+  nohup node . -p ${WETTY_PORT} &
 else
   # SSH connect mode
   #
@@ -30,7 +31,8 @@ else
   chmod 700 ${REMOTE_PUB_KEY_DIR}
   ssh-keyscan -H -p ${REMOTE_SSH_PORT} ${REMOTE_SSH_SERVER} > ~/.ssh/known_hosts
 
-  cmd="npm start -- -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE}" 
+  # cmd="npm start -- -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE}" 
+  cmd="nohup node . -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE}" 
   if ! [ "x${REMOTE_SSH_USER}" == "x" ]; then
     cmd="${cmd} --sshuser ${REMOTE_SSH_USER}"
   fi
@@ -43,5 +45,5 @@ else
   if ! [ "x${SSH_KEY}" == "x" ]; then
     cmd="${cmd} --sshkey ${SSH_KEY}"
   fi
-  ${cmd}
+  ${cmd} &
 fi
