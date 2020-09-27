@@ -30,7 +30,7 @@ else
   chmod 700 ${REMOTE_PUB_KEY_DIR}
   ssh-keyscan -H -p ${REMOTE_SSH_PORT} ${REMOTE_SSH_SERVER} > ~/.ssh/known_hosts
 
-  cmd="npm start -- -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE}" 
+  cmd="npm start -- -p ${WETTY_PORT} --sshhost ${REMOTE_SSH_SERVER} --sshport ${REMOTE_SSH_PORT} --base ${BASE} --bypasshelmet" 
   if ! [ "x${REMOTE_SSH_USER}" == "x" ]; then
     cmd="${cmd} --sshuser ${REMOTE_SSH_USER}"
   fi
