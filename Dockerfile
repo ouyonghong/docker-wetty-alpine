@@ -1,4 +1,4 @@
-FROM node:14-alpine as builder
+FROM node:dubnium-alpine as builder
 RUN apk add -U build-base python git
 WORKDIR /app
 #COPY . /app
@@ -8,7 +8,7 @@ RUN git clone https://github.com/butlerx/wetty /app && \
     yarn build && \
     yarn install --production --ignore-scripts --prefer-offline
 
-FROM node:14-alpine
+FROM node:dubnium-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 EXPOSE 3000
