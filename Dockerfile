@@ -4,6 +4,7 @@ WORKDIR /app
 #COPY . /app
 RUN git clone https://github.com/butlerx/wetty /app && \
 #	git checkout d0aaa35dbfcb30d8739c22cb3226238ad23a6d7d && \
+    git checkout fc632d638d0230c2a734cd54ab6350a448841d67 && \
     yarn && \
     yarn build && \
     yarn install --production --ignore-scripts --prefer-offline
